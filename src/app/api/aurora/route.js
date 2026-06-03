@@ -14,7 +14,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const lat = parseFloat(searchParams.get('lat')) || 65;
     const lon = parseFloat(searchParams.get('lon')) || -20;
-    const cacheKey = 'aurora_forecast';
+    const cacheKey = `aurora_forecast_${Math.round(lat)}_${Math.round(lon)}`;
 
     const cached = cache.get(cacheKey);
     if (cached) {
@@ -25,17 +25,47 @@ export async function GET(request) {
     const currentKp = await noaaService.getCurrentKpIndex();
     const kpVal = currentKp.value;
 
-    const northern = {
-      probability: auroraData.northern_probability,
-      kpThreshold: 5,
-      visibility: kpVal >= 6 ? 'high' : kpVal >= 4 ? 'moderate' : 'low',
-      optimalLocations: [
+    // Adjust probability based on latitude
+    let adjustedProbability = auroraData.northern_probability;
+    if (lat < 45) {
+      adjustedProbability = Math.max(0, auroraData.northern_probability - 60);
+    } else if (lat < 60) {
+      adjustedProbability = Math.max(0, auroraData.northern_probability - 25);
+    }
+
+    // Determine optimal locations based on latitude
+    let optimalLocations = [];
+    if (lat >= 60) {
+      optimalLocations = [
         'Reykjavik, Iceland',
         'Fairbanks, Alaska',
         'Tromsø, Norway',
         'Yellowknife, Canada',
         'Murmansk, Russia'
-      ],
+      ];
+    } else if (lat >= 45) {
+      optimalLocations = [
+        'Edinburgh, Scotland',
+        'Calgary, Canada',
+        'Oslo, Norway',
+        'Stockholm, Sweden',
+        'Vancouver, Canada'
+      ];
+    } else {
+      optimalLocations = [
+        'Seattle, USA',
+        'Chicago, USA',
+        'London, UK',
+        'Toronto, Canada',
+        'Berlin, Germany'
+      ];
+    }
+
+    const northern = {
+      probability: adjustedProbability,
+      kpThreshold: 5,
+      visibility: kpVal >= 6 ? 'high' : kpVal >= 4 ? 'moderate' : 'low',
+      optimalLocations,
       forecast_24h: auroraData.forecast_24h || []
     };
 

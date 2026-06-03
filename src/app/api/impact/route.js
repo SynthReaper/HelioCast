@@ -20,11 +20,11 @@ export async function GET() {
     }
 
     const kp = await noaaService.getCurrentKpIndex();
-    const wind = await nasaService.getSolarWind(1);
+    const wind = await nasaService.getSolarWind(6);
     const flares = await noaaService.getSolarFlares(24);
 
     const kpVal = kp.value;
-    const windVal = wind[0] || { speed: 400 };
+    const windVal = wind[wind.length - 1] || { speed: 400 };
 
     const highSpeed = windVal.speed > 600;
     const hasXFlares = flares.some(f => f.classValue === 'X');

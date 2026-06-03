@@ -1,6 +1,6 @@
 # HelioCast 🌟 — Real-time Space Weather at Your Fingertips
 
-**HelioCast** is a premium, real-time Space Weather Dashboard that brings live NASA and NOAA solar telemetry to life. Track solar flares, aurora forecasts, geomagnetic storms, and understand how space weather impacts Earth's systems—all in a beautiful, dark-cosmic interactive interface.
+**HelioCast** is a premium, real-time Space Weather Dashboard that brings live NASA and NOAA solar telemetry to life. Track solar flares, aurora forecasts, geomagnetic storms, and understand how space weather impacts Earth's systems—all in a beautiful, light-themed scientific laboratory console interface.
 
 Designed, developed, and maintained by **[SynthReaper](https://github.com/SynthReaper)**.
 
@@ -21,11 +21,11 @@ Designed, developed, and maintained by **[SynthReaper](https://github.com/SynthR
 - **Sunspot Count** — Active regions visible + Solar Cycle progress (Cycle 25).
 
 ### Advanced Capabilities
-- 🎨 **Aurora Oval Visualizer** — Dynamic particle-driven canvas animation indicating forecast intensity.
+- 🎨 **Aurora Oval Visualizer** — Dynamic particle-driven canvas animation indicating forecast intensity (teal and light-mode compatible).
 - 📊 **Historical Charts** — Interactive custom-drawn line graphs showing Kp geomagnetic trend lines.
 - 🛰️ **Infrastructure Impact Analysis** — Live assessment of solar weather risks on satellites, power grids, GPS, and radio communications.
-- 🔔 **Smart Alerts** — Warnings for X-class solar events & G4+ (Kp >= 8) geomagnetic storms.
-- 🌍 **Location-Based Aurora** — Latitudinal probability calculations.
+- 🔔 **Smart Alerts** — Warnings for X-class solar events & G4+ (Kp >= 8) geomagnetic storms, accompanied by HTML5 Audio Synthesized vocal alerts.
+- 🌍 **Dynamic Location-Based Aurora** — Latitudinal probability calculations and dynamically generated optimal viewing zones (e.g., Reykjavik, Fairbanks, Tromsø, Yellowknife, Murmansk for high latitudes; Edinburgh/Oslo/Calgary for mid-latitudes) fetched directly via API parameter routing.
 
 ---
 
@@ -59,27 +59,28 @@ Open `http://localhost:3000` in your web browser.
 
 ```
 HelioCast/
-├── README.md                 # This file
-├── package.json              # Next.js configurations
-├── next.config.js            # Build rules
+├── README.md                 # Project documentation
+├── package.json              # App dependencies & scripts
+├── next.config.js            # Next.js bundler settings
+├── jsconfig.json             # Absolute path alias overrides
 │
 ├── src/
 │   ├── lib/
-│   │   ├── cache.js          # In-memory Serverless cache
-│   │   ├── nasa.js           # NASA Solar wind telemetry
-│   │   └── noaa.js           # NOAA scale predictions
+│   │   ├── cache.js          # Serverless execution cache
+│   │   ├── nasa.js           # NASA Solar wind telemetry wrapper
+│   │   └── noaa.js           # NOAA geomagnetic telemetry wrapper
 │   │
 │   └── app/
-│       ├── layout.js         # HTML core container
-│       ├── globals.css       # Deep space stylesheet
-│       ├── page.js           # React interactive component
+│       ├── layout.js         # Root HTML/head config
+│       ├── globals.css       # Premium Light mode stylesheet
+│       ├── page.js           # Main console React UI view
 │       └── api/
-│           ├── kp-index/     # Geomagnetic storm api
-│           ├── wind/         # Solar wind api
-│           ├── solar-flares/ # Flare detection api
-│           ├── aurora/       # Northern aurora api
-│           ├── sunspots/     # Sunspot cycle api
-│           └── impact/       # Infrastructure risks api
+│           ├── kp-index/     # GET /api/kp-index
+│           ├── wind/         # GET /api/wind
+│           ├── solar-flares/ # GET /api/solar-flares
+│           ├── aurora/       # GET /api/aurora
+│           ├── sunspots/     # GET /api/sunspots
+│           └── impact/       # GET /api/impact
 ```
 
 ---
